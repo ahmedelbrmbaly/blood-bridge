@@ -15,20 +15,26 @@
 
 ### Hospital
 
-- **hospital_id**: PK
-- **name**: string
+- **hospital_user_id**: PK
+- **user_name**: string
+- **hospital_name**: string
 - **email**: string
 - **password**: string
 - **city**: string
 
-### Blood Bank
+### Bank
 
-- **blood_bank_id**: PK
+- **bank_user_id**: PK
+- **user_name**: string
+- **bank_name**: string
+- **email**: string
+- **password**: string
 - **city**: string
 
 ### Admin
 
 - **admin_id**: PK
+- **user_name**: string
 - **email**: string
 - **password**: string
 
