@@ -54,4 +54,23 @@ export interface Donation {
   blood_info: Donor['blood_info'];
 }
 
-export interface Blood_stocks {}
+export interface Blood_stocks {
+  blood_stock: Donation[];
+  type: Blood['type'];
+  bank: Bank;
+  quantity: number;
+}
+
+export interface Patient {
+  name: string;
+  status: string;
+  type: Blood['type'];
+}
+
+export interface BloodRequest {
+  request_id: string;
+  hospital_id: Hospital['hospital_id'];
+  bank: Bank;
+  patient: Patient;
+  request_time: Date;
+}
