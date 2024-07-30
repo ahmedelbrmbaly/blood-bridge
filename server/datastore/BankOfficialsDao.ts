@@ -7,8 +7,8 @@ import {
 } from '../types';
 
 export interface BankOfficialDao {
-  register(user: BankOfficial): void;
-  login(
+  register_bank(user: BankOfficial): void;
+  login_bank(
     email: BankOfficial['user']['email'],
     password: BankOfficial['user']['password']
   ): void;

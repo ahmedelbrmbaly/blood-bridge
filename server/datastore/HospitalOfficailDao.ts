@@ -1,8 +1,8 @@
 import { Blood, Blood_stocks, BloodRequest, HospitalOfficial } from '../types';
 
 export interface HospitalOfficialDao {
-  register(hospital_official: HospitalOfficial): void;
-  login(
+  register_hospital(hospital_official: HospitalOfficial): void;
+  login_hospital(
     email: HospitalOfficial['user']['email'],
     password: HospitalOfficial['user']['password']
   ): void;

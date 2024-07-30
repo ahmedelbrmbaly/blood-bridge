@@ -7,9 +7,9 @@ import {
   HospitalOfficial,
 } from '../types';
 
-export interface BankOfficialDao {
-  register(user: Admin): void;
-  login(
+export interface AdminDao {
+  register_admin(user: Admin): void;
+  login_admin(
     email: Admin['user']['email'],
     password: Admin['user']['password']
   ): void;

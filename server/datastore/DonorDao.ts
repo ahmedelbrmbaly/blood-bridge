@@ -1,8 +1,8 @@
 import { Appointment, Donation, Donor } from '../types';
 
 export interface DonorDao {
-  register(donor: Donor): void;
-  login(
+  register_donor(donor: Donor): void;
+  login_donor(
     email: Donor['user']['email'],
     password: Donor['user']['password']
   ): void;
