@@ -47,6 +47,15 @@ export interface Admin {
   user: User;
 }
 
+export interface Appointment {
+  user_id: User['user_id'];
+  bank_id: Bank['bank_id'];
+  blood_info: Donor['blood_info'];
+  requested_date: Date;
+  confirmed_Date: Date;
+  donated: boolean;
+}
+
 export interface Donation {
   donation_id: string;
   user_id: User['user_id'];
