@@ -102,6 +102,13 @@ export enum MessageType {
   Donation_call = 'Donation_call',
 }
 
+export enum UserStatus {
+  active = 'ACTIVE',
+  deactive = 'DEACTIVE',
+  pending = 'PENDYING',
+  unknown = 'UNKNOWN',
+}
+
 // interfaces Definiations
 
 export interface BaseUser {
@@ -111,6 +118,7 @@ export interface BaseUser {
   user_email: Email;
   user_password: Password;
   user_city: CityName;
+  user_status: UserStatus;
 }
 
 export interface Blood {
@@ -129,6 +137,7 @@ export interface Hospital {
   readonly hospital_id: ID;
   hospital_name: string;
   hospital_city: CityName;
+  hospital_status: UserStatus;
 }
 
 export interface HospitalOfficial extends BaseUser {
@@ -139,6 +148,7 @@ export interface Bank {
   readonly bank_id: ID;
   bank_name: string;
   bank_city: CityName;
+  bank_status: UserStatus;
 }
 
 export interface BankOfficial extends BaseUser {
