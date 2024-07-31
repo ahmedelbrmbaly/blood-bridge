@@ -1,5 +1,6 @@
 import {
   Appointment,
+  Bank,
   BankOfficial,
   BloodRequest,
   Donation,
@@ -7,14 +8,21 @@ import {
 } from '../types';
 
 export interface BankOfficialDao {
-  register_bank(user: BankOfficial): void;
-  login_bank(
-    email: BankOfficial['user']['email'],
-    password: BankOfficial['user']['password']
+  registerBankOfficial(user: BankOfficial): void;
+  loginBankOfficial(
+    email: BankOfficial['email'],
+    password: BankOfficial['password']
+  ): BankOfficial | null;
+  manageAppointment(appointment: Appointment): Appointment;
+  validateDonation(appointment: Appointment): Donation | null;
+  addStocks(donation: Donation): void;
+  manageBloodRequest(request: BloodRequest): void;
+  notifyDonors(request: BloodRequest): Donor;
+  getAppointmentHistory(bank: Bank): Appointment[];
+  getDonationHistory(bank: Bank): Donation[];
+  updateProfile(
+    user_id: BankOfficial['user_id'],
+    updatedInfo: Partial<BankOfficial>
   ): void;
-  manage_appointment(appointment: Appointment): Appointment;
-  validate_donation(appointment: Appointment): Donation | void;
-  add_stocks(donation: Donation): void;
-  manage_request(request: BloodRequest): boolean;
-  notify_donors(request: BloodRequest): Donor;
+  deleteAccount(user_id: BankOfficial['user_id']): void;
 }

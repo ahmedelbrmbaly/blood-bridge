@@ -1,13 +1,13 @@
 import { Appointment, Donation, Donor } from '../types';
 
 export interface DonorDao {
-  register_donor(donor: Donor): void;
-  login_donor(
-    email: Donor['user']['email'],
-    password: Donor['user']['password']
-  ): void;
-  request_appointment(appointment: Appointment): void;
-  donation_history(donor_id: Donor['user']['user_id']): Donation[];
-  appointment_history(donor_id: Donor['user']['user_id']): Appointment[];
-  notifications(donor_id: Donor['user']['user_id']): void; // To be designed
+  registerDonor(donor: Donor): void;
+  loginDonor(email: Donor['email'], password: Donor['password']): Donor | null;
+  requestAppointment(appointment: Appointment): void;
+  getDonationHistory(donor_id: Donor['user_id']): Donation[];
+  getAppointmentHistory(donor_id: Donor['user_id']): Appointment[];
+  getNotifications(donorId: string): Notification[];
+  // To be designed
+  updateProfile(donor_id: Donor['user_id'], updatedInfo: Partial<Donor>): void;
+  deleteAccount(donor_id: Donor['user_id']): void;
 }

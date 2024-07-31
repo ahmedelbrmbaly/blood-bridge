@@ -8,14 +8,27 @@ import {
 } from '../types';
 
 export interface AdminDao {
-  register_admin(user: Admin): void;
-  login_admin(
-    email: Admin['user']['email'],
-    password: Admin['user']['password']
+  registerAdmin(user: Admin): void;
+  loginAdmin(email: Admin['email'], password: Admin['password']): Admin | null;
+  manageDonors(donor: Donor, action: 'activate' | 'deactivate'): void;
+  manage_hospital(
+    hospital: Hospital,
+    action: 'add' | 'deactivate' | 'edit'
   ): void;
-  manage_donors(donor: Donor): void;
-  manage_hospital(hospital: Hospital): void;
-  manage_hospital_Officials(user: HospitalOfficial['user']): void;
-  manage_bank(bank: Bank): void;
-  manage_bank_Officials(user: BankOfficial['user']): void;
+
+  manageHospitalOfficials(
+    user: HospitalOfficial['user_id'],
+    action: 'activate' | 'deactivate'
+  ): void;
+  manageBanks(bank: Bank, action: 'add' | 'deactivate' | 'edit'): void;
+  manageBankOfficials(
+    user: BankOfficial['user_id'],
+    action: 'activate' | 'deactivate'
+  ): void;
+  viewAllDonors(): Donor[];
+  viewAllHospitals(): Hospital[];
+  viewAllHospitalsOfficials(): HospitalOfficial[];
+  viewAllBank(): Bank[];
+  viewAllBankOfficials(): BankOfficial[];
+  updateProfile(user_id: Admin['user_id'], updatedInfo: Partial<Admin>): void;
 }

@@ -1,12 +1,17 @@
-import { Blood, Blood_stocks, BloodRequest, HospitalOfficial } from '../types';
+import { Blood, BloodStocks, BloodRequest, HospitalOfficial } from '../types';
 
 export interface HospitalOfficialDao {
-  register_hospital(hospital_official: HospitalOfficial): void;
-  login_hospital(
-    email: HospitalOfficial['user']['email'],
-    password: HospitalOfficial['user']['password']
+  registerHospitalOfficial(hospital_official: HospitalOfficial): void;
+  loginHospitalOfficial(
+    email: HospitalOfficial['email'],
+    password: HospitalOfficial['password']
+  ): HospitalOfficial | null;
+  requestBlood(request_details: BloodRequest): void;
+  searchBloodStocks(type: Blood['type']): BloodStocks;
+  getRequestHistory(user_id: HospitalOfficial['user_id']): BloodRequest[];
+  updateProfile(
+    user_id: HospitalOfficial['user_id'],
+    updatedInfo: Partial<HospitalOfficial>
   ): void;
-  request_blood(request_details: BloodRequest): void;
-  search_stocks(type: Blood['type']): Blood_stocks;
-  request_history(user_id: HospitalOfficial['user']['user_id']): BloodRequest[];
+  deleteAccount(user_id: HospitalOfficial['user_id']): void;
 }
