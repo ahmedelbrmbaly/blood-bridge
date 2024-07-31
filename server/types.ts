@@ -86,6 +86,7 @@ export enum AppointmentStatus {
   Confirmed = 'CONFIRMED',
   Completed = 'COMPLETED',
   Cancelled = 'CANCELLED',
+  Denied = 'DENIED',
 }
 
 export enum BloodRequestStatus {

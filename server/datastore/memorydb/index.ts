@@ -13,6 +13,8 @@ import {
   BloodStocks,
   BaseUser,
   UserStatus,
+  AppointmentStatus,
+  VirusTestResult,
 } from '../../types';
 
 export class InMemoryDataStore implements Datastore {
@@ -312,11 +314,58 @@ export class InMemoryDataStore implements Datastore {
     return user || null;
   }
 
-  manageAppointment(appointment: Appointment): Appointment {
-    throw new Error('Method not implemented.');
+  manageAppointment(
+    new_appointment: Appointment,
+    status: AppointmentStatus,
+    updated_at: Date,
+    confirmed_date?: Date,
+    is_donated?: boolean
+  ): Appointment {
+    const index = this.appointments.findIndex(
+      a => a.appointment_id === new_appointment.appointment_id
+    );
+    if (index === -1) {
+      throw new Error('Appointment does not exist');
+    }
+    // check if's 3 months after last donation
+    const donor = this.donors.findIndex(
+      a => a.user_id === new_appointment.donor_id
+    );
+    const currentDate = new Date();
+    const timeDifference =
+      currentDate.getTime() - donor['donor_last_donation'].getTime();
+    // Convert milliseconds to days
+    const daysElapsed = timeDifference / (1000 * 60 * 60 * 24);
+    if (daysElapsed < 90) {
+      new_appointment['appointment_status'] = AppointmentStatus.Denied;
+    } else {
+      new_appointment['appointment_status'] = status;
+    }
+    new_appointment['appointment_status'] = status;
+    new_appointment['appointment_updated_at'] = updated_at;
+
+    if (confirmed_date) {
+      new_appointment['appointment_confirmed_date'] = confirmed_date;
+    }
+    if (is_donated) {
+      new_appointment['appointment_donated'] = is_donated;
+    }
+
+    this.appointments[index] = new_appointment;
+
+    return new_appointment;
   }
-  validateDonation(appointment: Appointment): Donation | null {
-    throw new Error('Method not implemented.');
+
+  virusTest(
+    appointment: Appointment,
+    test_result: VirusTestResult
+  ): Appointment {
+    if(test_result === VirusTestResult.Positive){
+      // donation denyied
+      //notify user
+    }
+    else if
+
   }
   addStocks(donation: Donation): void {
     throw new Error('Method not implemented.');
@@ -342,6 +391,8 @@ export class InMemoryDataStore implements Datastore {
   deleteBankOfficialAccount(user_id: BankOfficial['user_id']): void {
     throw new Error('Method not implemented.');
   }
+
+  // Hospital Officails Methods
   registerHospitalOfficial(hospital_official: HospitalOfficial): void {
     throw new Error('Method not implemented.');
   }
