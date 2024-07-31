@@ -4,6 +4,7 @@ type Email = string & { __brand: 'Email' };
 
 type Password = string;
 type NationalID = string;
+
 export type CityName =
   | 'Cairo'
   | 'Alexandria'
