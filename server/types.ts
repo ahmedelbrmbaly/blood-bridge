@@ -1,3 +1,5 @@
+// Types Definations
+
 type ID = string;
 type NonNegativeInteger = number & { __brand: 'NonNegativeInteger' };
 type Email = string & { __brand: 'Email' };
@@ -46,6 +48,8 @@ export type CityName =
   | 'Girga'
   | 'Akhmim'
   | 'Matareya';
+
+// Enums Definiations
 
 export enum UserType {
   Donor = 'DONOR',
@@ -97,31 +101,34 @@ export enum MessageType {
   Denied_Donation = 'Denied_Donation',
   Donation_call = 'Donation_call',
 }
+
+// interfaces Definiations
+
 export interface BaseUser {
   readonly user_id: ID;
   readonly user_type: UserType;
-  name: string;
-  email: Email;
-  password: Password;
-  city: CityName;
+  user_name: string;
+  user_email: Email;
+  user_password: Password;
+  user_city: CityName;
 }
 
 export interface Blood {
-  type: BloodType;
-  virus_test?: VirusTestResult;
-  expiration?: Date;
+  blood_type: BloodType;
+  blood_virus_test?: VirusTestResult;
+  blood_expiration?: Date;
 }
 
 export interface Donor extends BaseUser {
-  national_id: NationalID;
-  blood_info: Blood;
-  last_donation: Date;
+  donor_national_id: NationalID;
+  donor_blood_info: Blood;
+  donor_last_donation: Date;
 }
 
 export interface Hospital {
   readonly hospital_id: ID;
-  name: string;
-  city: CityName;
+  hospital_name: string;
+  hospital_city: CityName;
 }
 
 export interface HospitalOfficial extends BaseUser {
@@ -130,8 +137,8 @@ export interface HospitalOfficial extends BaseUser {
 
 export interface Bank {
   readonly bank_id: ID;
-  name: string;
-  city: CityName;
+  bank_name: string;
+  bank_city: CityName;
 }
 
 export interface BankOfficial extends BaseUser {
@@ -144,22 +151,22 @@ export interface Appointment {
   readonly appointment_id: ID;
   readonly donor_id: Donor['user_id'];
   readonly bank_id: Bank['bank_id'];
-  blood_info: Donor['blood_info'];
-  requested_date: Date;
-  status: AppointmentStatus;
-  confirmed_date?: Date;
-  donated: boolean;
-  created_at: Date;
-  updated_at: Date;
+  blood_info: Donor['donor_blood_info'];
+  appointment_requested_date: Date;
+  appointment_status: AppointmentStatus;
+  appointment_confirmed_date?: Date;
+  appointment_donated: boolean;
+  appointment_created_at: Date;
+  appointment_updated_at: Date;
 }
 
 export interface Donation {
   readonly donation_id: ID;
   readonly donor_id: Donor['user_id'];
   readonly bank_id: Bank['bank_id'];
-  blood_info: Donor['blood_info'];
-  created_at: Date;
-  updated_at: Date;
+  donation_blood_info: Donor['donor_blood_info'];
+  donation_created_at: Date;
+  donation_updated_at: Date;
 }
 
 export interface BloodStocks {
@@ -171,9 +178,9 @@ export interface BloodStocks {
 export interface Patient {
   readonly patient_id: ID;
   readonly patient_national_id: NationalID;
-  name: string;
-  status: PatientStatus;
-  type: BloodType;
+  patient_name: string;
+  patient_status: PatientStatus;
+  patient_blood_type: BloodType;
 }
 
 export interface BloodRequest {
@@ -182,14 +189,14 @@ export interface BloodRequest {
   readonly bank_id: Bank['bank_id'];
   patient: Patient;
   request_time: Date;
-  status: BloodRequestStatus;
+  request_status: BloodRequestStatus;
 }
 
 export interface Notification {
   readonly notification_id: ID;
   user_id: ID;
-  message: string;
-  message_type: MessageType;
-  read: boolean;
-  created_at: Date;
+  notification_message: string;
+  notification_message_type: MessageType;
+  notification_read: boolean;
+  notification_created_at: Date;
 }

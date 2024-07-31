@@ -9,7 +9,10 @@ import {
 
 export interface AdminDao {
   registerAdmin(user: Admin): void;
-  loginAdmin(email: Admin['email'], password: Admin['password']): Admin | null;
+  loginAdmin(
+    email: Admin['user_email'],
+    password: Admin['user_password']
+  ): Admin | null;
   manageDonors(donor: Donor, action: 'activate' | 'deactivate'): void;
   manage_hospital(
     hospital: Hospital,
@@ -30,5 +33,8 @@ export interface AdminDao {
   viewAllHospitalsOfficials(): HospitalOfficial[];
   viewAllBank(): Bank[];
   viewAllBankOfficials(): BankOfficial[];
-  updateProfile(user_id: Admin['user_id'], updatedInfo: Partial<Admin>): void;
+  updateAdminProfile(
+    user_id: Admin['user_id'],
+    updatedInfo: Partial<Admin>
+  ): void;
 }

@@ -3,15 +3,15 @@ import { Blood, BloodStocks, BloodRequest, HospitalOfficial } from '../types';
 export interface HospitalOfficialDao {
   registerHospitalOfficial(hospital_official: HospitalOfficial): void;
   loginHospitalOfficial(
-    email: HospitalOfficial['email'],
-    password: HospitalOfficial['password']
+    email: HospitalOfficial['user_email'],
+    password: HospitalOfficial['user_password']
   ): HospitalOfficial | null;
   requestBlood(request_details: BloodRequest): void;
-  searchBloodStocks(type: Blood['type']): BloodStocks;
+  searchBloodStocks(type: Blood['blood_type']): BloodStocks;
   getRequestHistory(user_id: HospitalOfficial['user_id']): BloodRequest[];
-  updateProfile(
+  updateHospitalOfficialProfile(
     user_id: HospitalOfficial['user_id'],
     updatedInfo: Partial<HospitalOfficial>
   ): void;
-  deleteAccount(user_id: HospitalOfficial['user_id']): void;
+  deleteHospitalOfficialAccount(user_id: HospitalOfficial['user_id']): void;
 }
