@@ -194,7 +194,7 @@ export interface BloodRequest {
 
 export interface Notification {
   readonly notification_id: ID;
-  user_id: ID;
+  user_id: BaseUser['user_id'];
   notification_message: string;
   notification_message_type: MessageType;
   notification_read: boolean;

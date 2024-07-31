@@ -1,4 +1,4 @@
-import { Appointment, Donation, Donor } from '../types';
+import { Appointment, BaseUser, Donation, Donor } from '../types';
 
 export interface DonorDao {
   registerDonor(donor: Donor): void;
@@ -9,7 +9,7 @@ export interface DonorDao {
   requestAppointment(appointment: Appointment): void;
   getDonationHistoryDonor(donor_id: Donor['user_id']): Donation[];
   getAppointmentHistoryDonor(donor_id: Donor['user_id']): Appointment[];
-  getNotifications(donorId: string): Notification[];
+  getNotifications(donor_id: BaseUser['user_id']): Notification[];
   // To be designed
   updateDonorProfile(
     donor_id: Donor['user_id'],
