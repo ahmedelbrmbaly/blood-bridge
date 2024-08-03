@@ -5,6 +5,7 @@ import {
   BankOfficial,
   Blood,
   BloodRequest,
+  BloodRequestStatus,
   Donation,
   Donor,
   VirusTestResult,
@@ -33,7 +34,10 @@ export interface BankOfficialDao {
 
   addStocks(donation: Donation): void;
 
-  manageBloodRequest(request: BloodRequest): void;
+  manageBloodRequest(
+    request: BloodRequest,
+    request_status: BloodRequestStatus
+  ): void;
 
   notifyDonors(request: BloodRequest): Donor;
 

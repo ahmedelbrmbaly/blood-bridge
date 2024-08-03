@@ -16,6 +16,8 @@ import {
   AppointmentStatus,
   VirusTestResult,
   BloodRequestStatus,
+  Notification,
+  Patient,
 } from '../../types';
 
 export class InMemoryDataStore implements Datastore {
@@ -361,36 +363,56 @@ export class InMemoryDataStore implements Datastore {
     appointment: Appointment,
     test_result: VirusTestResult
   ): Appointment {
-    if(test_result === VirusTestResult.Positive){
-      // donation denyied
-      //notify user
+    const index = this.appointments.findIndex(
+      a => a.appointment_id === appointment.appointment_id
+    );
+    if (index === -1) {
+      throw new Error('Appointment not found');
     }
-    else if
-
+    this.appointments[index].blood_info.blood_virus_test = test_result;
+    return this.appointments[index];
   }
+
   addStocks(donation: Donation): void {
     throw new Error('Method not implemented.');
   }
-  manageBloodRequest(request: BloodRequest): void {
-    throw new Error('Method not implemented.');
+  manageBloodRequest(
+    request: BloodRequest,
+    request_status: BloodRequestStatus
+  ): void {
+    const index = this.blood_requests.findIndex(
+      r => r.request_id === request.request_id
+    );
+
+    this.blood_requests[index]['request_status'] = request_status;
   }
   notifyDonors(request: BloodRequest): Donor {
-    throw new Error('Method not implemented.');
+    const suitableDonor = this.donors.find(
+      d => d.donor_blood_info.blood_type === request.patient.patient_blood_type
+    );
+    if (!suitableDonor) {
+      throw new Error('No suitable donor found');
+    }
+    return suitableDonor;
   }
   getAppointmentHistoryBankOfficial(bank: Bank): Appointment[] {
-    throw new Error('Method not implemented.');
+    return this.appointments.filter(a => a.bank_id === bank.bank_id);
   }
   getDonationHistoryBankOfficial(bank: Bank): Donation[] {
-    throw new Error('Method not implemented.');
+    return this.donations.filter(d => d.bank_id === bank.bank_id);
   }
   updateBankOfficialProfile(
     user_id: BankOfficial['user_id'],
     updatedInfo: Partial<BankOfficial>
   ): void {
-    throw new Error('Method not implemented.');
+    const index = this.bank_users.findIndex(h => h.user_id === user_id);
+    if (index === -1) {
+      throw new Error('Bank official not found');
+    }
+    this.bank_users[index] = { ...this.bank_users[index], ...updatedInfo };
   }
   deleteBankOfficialAccount(user_id: BankOfficial['user_id']): void {
-    throw new Error('Method not implemented.');
+    this.bank_users = this.bank_users.filter(d => d['user_id'] !== user_id);
   }
 
   // Hospital Officails Methods
@@ -417,11 +439,14 @@ export class InMemoryDataStore implements Datastore {
     // If found, return the donor. If not, return null
     return user || null;
   }
-  requestBlood(request_details: BloodRequest, request_status: BloodRequestStatus): void {
+  requestBlood(
+    request_details: BloodRequest,
+    request_status: BloodRequestStatus
+  ): void {
     const index = this.blood_requests.findIndex(
       a => a.request_id === request_details.request_id
     );
-    this.blood_requests[index]['request_status'] = request_status
+    this.blood_requests[index]['request_status'] = request_status;
   }
   searchBloodStocks(type: Blood['blood_type']): BloodStocks {
     const stocks = this.blood_stocks.find(s => s.blood_stock[type]);
@@ -446,10 +471,15 @@ export class InMemoryDataStore implements Datastore {
     if (index === -1) {
       throw new Error('Hospital official not found');
     }
-    this.hospital_users[index] = { ...this.hospital_users[index], ...updatedInfo };
+    this.hospital_users[index] = {
+      ...this.hospital_users[index],
+      ...updatedInfo,
+    };
   }
 
   deleteHospitalOfficialAccount(user_id: HospitalOfficial['user_id']): void {
-    this.hospital_users = this.hospital_users.filter(d => d['user_id'] !== user_id);
+    this.hospital_users = this.hospital_users.filter(
+      d => d['user_id'] !== user_id
+    );
   }
 }
