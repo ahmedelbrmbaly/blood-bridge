@@ -1,4 +1,4 @@
-import { Datastore } from '../';
+import { Datastore } from '..';
 import {
   Donor,
   Appointment,
@@ -38,9 +38,7 @@ export class InMemoryDataStore implements Datastore {
   // Donor Methods
   registerDonor(donor: Donor): void {
     // Check if a donor with the same email already exists
-    const existingDonor = this.donors.find(
-      d => d['user_email'] === donor['user_email']
-    );
+    const existingDonor = this.donors.find(d => d['user_email'] === donor['user_email']);
     if (existingDonor) {
       throw new Error('A donor with this email already exists');
     }
@@ -49,10 +47,7 @@ export class InMemoryDataStore implements Datastore {
     this.donors.push(donor);
   }
 
-  loginDonor(
-    email: Donor['user_email'],
-    password: Donor['user_password']
-  ): Donor | null {
+  loginDonor(email: Donor['user_email'], password: Donor['user_password']): Donor | null {
     // Find a donor with matching email and password
     const donor = this.donors.find(
       d => d['user_email'] === email && d['user_password'] === password
@@ -83,10 +78,7 @@ export class InMemoryDataStore implements Datastore {
     });
   }
 
-  updateDonorProfile(
-    donor_id: Donor['user_id'],
-    updatedInfo: Partial<Donor>
-  ): void {
+  updateDonorProfile(donor_id: Donor['user_id'], updatedInfo: Partial<Donor>): void {
     // Find the index of the donor in our array
     const index = this.donors.findIndex(d => d['user_id'] === donor_id);
 
@@ -107,9 +99,7 @@ export class InMemoryDataStore implements Datastore {
 
   registerAdmin(user: Admin): void {
     // Check if a donor with the same email already exists
-    const existingAdmin = this.admins.find(
-      d => d['user_email'] === user['user_email']
-    );
+    const existingAdmin = this.admins.find(d => d['user_email'] === user['user_email']);
     if (existingAdmin) {
       throw new Error('An admin with this email already exists');
     }
@@ -118,10 +108,7 @@ export class InMemoryDataStore implements Datastore {
     this.admins.push(user);
   }
 
-  loginAdmin(
-    email: Admin['user_email'],
-    password: Admin['user_password']
-  ): Admin | null {
+  loginAdmin(email: Admin['user_email'], password: Admin['user_password']): Admin | null {
     // Find a donor with matching email and password
     const admin = this.admins.find(
       d => d['user_email'] === email && d['user_password'] === password
@@ -140,18 +127,13 @@ export class InMemoryDataStore implements Datastore {
   }
 
   manageHospital(hospital: Hospital, action: UserStatus): void {
-    const index = this.hospitals.findIndex(
-      d => d.hospital_id === hospital.hospital_id
-    );
+    const index = this.hospitals.findIndex(d => d.hospital_id === hospital.hospital_id);
     if (index === -1) {
       throw new Error('Hospital not found');
     }
     this.hospitals[index]['hospital_status'] = action;
   }
-  manageHospitalOfficials(
-    user: HospitalOfficial['user_id'],
-    action: UserStatus
-  ): void {
+  manageHospitalOfficials(user: HospitalOfficial['user_id'], action: UserStatus): void {
     const index = this.hospital_users.findIndex(d => d.user_id === user);
     if (index === -1) {
       throw new Error('Hospital Official not found');
@@ -174,11 +156,7 @@ export class InMemoryDataStore implements Datastore {
   }
   addBank(new_bank: Bank): void {
     if (
-      this.banks.find(
-        b =>
-          b.bank_name === new_bank.bank_name &&
-          b.bank_city === new_bank.bank_city
-      )
+      this.banks.find(b => b.bank_name === new_bank.bank_name && b.bank_city === new_bank.bank_city)
     ) {
       throw new Error('Bank already exists');
     }
@@ -208,13 +186,8 @@ export class InMemoryDataStore implements Datastore {
       throw new Error('Donor not found');
     }
   }
-  editHospital(
-    hospital_id: Hospital['hospital_id'],
-    updated_info: Partial<Hospital>
-  ): void {
-    const index = this.hospitals.findIndex(
-      d => d['hospital_id'] === hospital_id
-    );
+  editHospital(hospital_id: Hospital['hospital_id'], updated_info: Partial<Hospital>): void {
+    const index = this.hospitals.findIndex(d => d['hospital_id'] === hospital_id);
 
     if (index !== -1) {
       // If found, update the donor's information
@@ -249,10 +222,7 @@ export class InMemoryDataStore implements Datastore {
       throw new Error('Bank not found');
     }
   }
-  editBankOfficials(
-    user: BankOfficial['user_id'],
-    updated_info: Partial<BankOfficial>
-  ): void {
+  editBankOfficials(user: BankOfficial['user_id'], updated_info: Partial<BankOfficial>): void {
     const index = this.bank_users.findIndex(d => d['user_id'] === user);
 
     if (index !== -1) {
@@ -280,10 +250,7 @@ export class InMemoryDataStore implements Datastore {
   viewAllBankOfficials(): BankOfficial[] {
     return this.bank_users;
   }
-  updateAdminProfile(
-    user_id: Admin['user_id'],
-    updatedInfo: Partial<Admin>
-  ): void {
+  updateAdminProfile(user_id: Admin['user_id'], updatedInfo: Partial<Admin>): void {
     const index = this.admins.findIndex(a => a.user_id === user_id);
     if (index === -1) {
       throw new Error('Admin not found');
@@ -294,9 +261,7 @@ export class InMemoryDataStore implements Datastore {
   // Bank Officals methods
   registerBankOfficial(user: BankOfficial): void {
     // to be edit i must search all users not only bank users
-    const existingUser = this.bank_users.find(
-      d => d['user_email'] === user['user_email']
-    );
+    const existingUser = this.bank_users.find(d => d['user_email'] === user['user_email']);
     if (existingUser) {
       throw new Error('A user with this email already exists');
     }
@@ -331,12 +296,9 @@ export class InMemoryDataStore implements Datastore {
       throw new Error('Appointment does not exist');
     }
     // check if's 3 months after last donation
-    const donor = this.donors.findIndex(
-      a => a.user_id === new_appointment.donor_id
-    );
+    const donor = this.donors.findIndex(a => a.user_id === new_appointment.donor_id);
     const currentDate = new Date();
-    const timeDifference =
-      currentDate.getTime() - donor['donor_last_donation'].getTime();
+    const timeDifference = currentDate.getTime() - donor['donor_last_donation'].getTime();
     // Convert milliseconds to days
     const daysElapsed = timeDifference / (1000 * 60 * 60 * 24);
     if (daysElapsed < 90) {
@@ -359,13 +321,8 @@ export class InMemoryDataStore implements Datastore {
     return new_appointment;
   }
 
-  virusTest(
-    appointment: Appointment,
-    test_result: VirusTestResult
-  ): Appointment {
-    const index = this.appointments.findIndex(
-      a => a.appointment_id === appointment.appointment_id
-    );
+  virusTest(appointment: Appointment, test_result: VirusTestResult): Appointment {
+    const index = this.appointments.findIndex(a => a.appointment_id === appointment.appointment_id);
     if (index === -1) {
       throw new Error('Appointment not found');
     }
@@ -376,13 +333,8 @@ export class InMemoryDataStore implements Datastore {
   addStocks(donation: Donation): void {
     throw new Error('Method not implemented.');
   }
-  manageBloodRequest(
-    request: BloodRequest,
-    request_status: BloodRequestStatus
-  ): void {
-    const index = this.blood_requests.findIndex(
-      r => r.request_id === request.request_id
-    );
+  manageBloodRequest(request: BloodRequest, request_status: BloodRequestStatus): void {
+    const index = this.blood_requests.findIndex(r => r.request_id === request.request_id);
 
     this.blood_requests[index]['request_status'] = request_status;
   }
@@ -439,13 +391,8 @@ export class InMemoryDataStore implements Datastore {
     // If found, return the donor. If not, return null
     return user || null;
   }
-  requestBlood(
-    request_details: BloodRequest,
-    request_status: BloodRequestStatus
-  ): void {
-    const index = this.blood_requests.findIndex(
-      a => a.request_id === request_details.request_id
-    );
+  requestBlood(request_details: BloodRequest, request_status: BloodRequestStatus): void {
+    const index = this.blood_requests.findIndex(a => a.request_id === request_details.request_id);
     this.blood_requests[index]['request_status'] = request_status;
   }
   searchBloodStocks(type: Blood['blood_type']): BloodStocks {
@@ -478,8 +425,6 @@ export class InMemoryDataStore implements Datastore {
   }
 
   deleteHospitalOfficialAccount(user_id: HospitalOfficial['user_id']): void {
-    this.hospital_users = this.hospital_users.filter(
-      d => d['user_id'] !== user_id
-    );
+    this.hospital_users = this.hospital_users.filter(d => d['user_id'] !== user_id);
   }
 }

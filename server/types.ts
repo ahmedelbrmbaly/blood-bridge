@@ -6,7 +6,7 @@ type Email = string & { __brand: 'Email' };
 type Password = string;
 type NationalID = string;
 
-export type CityName =
+export type Cities =
   | 'Cairo'
   | 'Alexandria'
   | 'Gizeh'
@@ -51,14 +51,20 @@ export type CityName =
 
 // Enums Definiations
 
-export enum UserType {
+export enum UserTypes {
   Donor = 'DONOR',
   HospitalOfficial = 'HOSPITAL_OFFICIAL',
   BankOfficial = 'BANK_OFFICIAL',
   Admin = 'ADMIN',
 }
 
-export enum BloodType {
+export enum ActiveStatuses {
+  Active = 'ACTIVE',
+  Deactive = 'DE-ACTIVE',
+  Pending = 'PENDING',
+  Unknown = 'UNKNOWN',
+}
+export enum BloodTypes {
   A = 'A+',
   A_ = 'A-',
   B = 'B+',
@@ -69,145 +75,136 @@ export enum BloodType {
   O_ = 'O-',
 }
 
-export enum VirusTestResult {
+export enum TestResults {
   Positive = 'POSITIVE',
   Negative = 'NEGATIVE',
-  Not_tested = 'NOT_TESTED',
+  NotTested = 'NOT_TESTED',
 }
 
-export enum PatientStatus {
+export enum PatientStatuses {
   Immediate = 'IMMEDIATE',
   Urgent = 'URGENT',
   Normal = 'NORMAL',
 }
 
-export enum AppointmentStatus {
-  Pending = 'PENDING',
-  Confirmed = 'CONFIRMED',
-  Completed = 'COMPLETED',
-  Cancelled = 'CANCELLED',
+export enum DonationStatuses {
+  PendingAppointment = 'PENDING-APPOINTMENT',
+  ConfirmedAppointment = 'CONFIRMED-APPOINTMENT',
+  Donated = 'DONATED',
+  Accepted = 'ACCEPTED',
+  CancelledAppointment = 'CANCELLED-APPOINTMENT',
   Denied = 'DENIED',
+  Expired = 'EXPIRED',
+  Distributed = 'DISTRIBUTED',
 }
 
-export enum BloodRequestStatus {
+export enum BloodRequestStatuses {
   Pending = 'PENDING',
   Fulfilled = 'FULFILLED',
   Cancelled = 'CANCELLED',
 }
 
-export enum MessageType {
-  Confirmed_appoinment = 'Confirmed_appoinment',
-  Denied_appoinment = 'Denied_appoinment',
-  Confirmed_donation = 'Confirmed_donation',
-  Denied_Donation = 'Denied_Donation',
-  Donation_call = 'Donation_call',
-}
-
-export enum UserStatus {
-  active = 'ACTIVE',
-  deactive = 'DEACTIVE',
-  pending = 'PENDYING',
-  unknown = 'UNKNOWN',
+export enum MessageTypes {
+  Confirmed_appointment = 'CONFIRMED_APPOINTMENT',
+  Denied_appointment = 'DENIED_APPOINTMENT',
+  Confirmed_donation = 'CONFIRMED_DONATION',
+  Denied_Donation = 'DENIED_DONATION',
+  Donation_call = 'DONATION_CALL',
 }
 
 // interfaces Definiations
 
 export interface BaseUser {
-  readonly user_id: ID;
-  readonly user_type: UserType;
-  user_name: string;
-  user_email: Email;
-  user_password: Password;
-  user_city: CityName;
-  user_status: UserStatus;
-}
-
-export interface Blood {
-  blood_type: BloodType;
-  blood_virus_test?: VirusTestResult;
-  blood_expiration?: Date;
+  readonly userId: ID;
+  readonly userType: UserTypes;
+  userName: string;
+  userEmail: Email;
+  userPassword: Password;
+  userCity: Cities;
+  userStatus: ActiveStatuses;
 }
 
 export interface Donor extends BaseUser {
-  donor_national_id: NationalID;
-  donor_blood_info: Blood;
-  donor_last_donation: Date;
+  dNationalId: NationalID;
+  dBloodType: BloodTypes;
+  dLastDonation: Date;
 }
 
 export interface Hospital {
-  readonly hospital_id: ID;
-  hospital_name: string;
-  hospital_city: CityName;
-  hospital_status: UserStatus;
+  readonly hospitalId: ID;
+  hospitalName: string;
+  hospitalCity: Cities;
+  hospitalStatus: ActiveStatuses | ActiveStatuses.Pending;
 }
 
 export interface HospitalOfficial extends BaseUser {
-  readonly hospital_id: Hospital['hospital_id'];
+  readonly uHospitalId: Hospital['hospitalId'];
 }
 
 export interface Bank {
-  readonly bank_id: ID;
-  bank_name: string;
-  bank_city: CityName;
-  bank_status: UserStatus;
+  readonly bankId: ID;
+  bankName: string;
+  bankCity: Cities;
+  bankStatus: ActiveStatuses | ActiveStatuses.Pending;
 }
 
 export interface BankOfficial extends BaseUser {
-  readonly bank_id: Bank['bank_id'];
+  readonly uBankId: Bank['bankId'];
 }
 
 export interface Admin extends BaseUser {}
 
-export interface Appointment {
-  readonly appointment_id: ID;
-  readonly donor_id: Donor['user_id'];
-  readonly bank_id: Bank['bank_id'];
-  blood_info: Donor['donor_blood_info'];
-  appointment_requested_date: Date;
-  appointment_status: AppointmentStatus;
-  appointment_confirmed_date?: Date;
-  appointment_donated: boolean;
-  appointment_created_at: Date;
-  appointment_updated_at: Date;
-}
-
 export interface Donation {
-  readonly donation_id: ID;
-  readonly donor_id: Donor['user_id'];
-  readonly bank_id: Bank['bank_id'];
-  donation_blood_info: Donor['donor_blood_info'];
-  donation_created_at: Date;
-  donation_updated_at: Date;
-}
-
-export interface BloodStocks {
-  blood_stock: Record<BloodType, Donation[]>;
-  bank_id: Bank['bank_id'];
-  quantity: NonNegativeInteger;
+  readonly donationId: ID;
+  readonly donorId: Donor['userId'];
+  readonly bankId: Bank['bankId'];
+  readonly bankCity: Bank['bankCity'];
+  bloodType: Donor['dBloodType'];
+  virusTest: TestResults | TestResults.NotTested;
+  donationStatus: DonationStatuses | DonationStatuses.PendingAppointment;
+  aRequestedDate: Date;
+  aConfirmedDate: Date;
+  donationDate: Date;
+  expiryDate: Date;
+  lastUpdate: Date;
 }
 
 export interface Patient {
-  readonly patient_id: ID;
-  readonly patient_national_id: NationalID;
-  patient_name: string;
-  patient_status: PatientStatus;
-  patient_blood_type: BloodType;
+  readonly patientId: ID;
+  readonly patientNationalId: NationalID;
+  patientName: string;
+  patient_status: PatientStatuses;
+  patientBloodType: BloodTypes;
+  patientCity: Cities;
 }
 
-export interface BloodRequest {
-  readonly request_id: ID;
-  readonly hospital_id: Hospital['hospital_id'];
-  readonly bank_id: Bank['bank_id'];
-  patient: Patient;
-  request_time: Date;
-  request_status: BloodRequestStatus;
+export interface BloodRequest extends Patient {
+  readonly requestId: ID;
+  readonly hId: Hospital['hospitalId'];
+  readonly bId: Bank['bankId'];
+  pId: Patient['patientId'];
+  requestDate: Date;
+  requestStatus: BloodRequestStatuses;
 }
 
 export interface Notification {
-  readonly notification_id: ID;
-  user_id: BaseUser['user_id'];
-  notification_message: string;
-  notification_message_type: MessageType;
-  notification_read: boolean;
-  notification_created_at: Date;
+  readonly notificationId: ID;
+  userId: BaseUser['userId'];
+  senderId: BaseUser['userId'];
+  message: string;
+  messageType: MessageTypes;
+  read: boolean;
+  sendAt: Date;
 }
+export interface BloodStocks extends Donation {
+  bId: Donation['bankId'];
+  bCity: Donation['bankCity'];
+  bloodType: Donation['bloodType'];
+  quantity: Number;
+}
+
+// export interface BloodStocks {
+//   blood_stock: Record<BloodType, Donation[]>;
+//   bank_id: Bank['bank_id'];
+//   quantity: NonNegativeInteger;
+// }
