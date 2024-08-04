@@ -1,7 +1,7 @@
 import { Donor, UserTypes } from '../../types';
 
 export interface DonorDao {
-  registerDonor(donor: Donor): void;
+  registerDonor(donor: Donor): Promise<Donor | undefined>;
 
-  getDonorInfo(userId: Donor['userId']): UserTypes | null;
+  getDonorInfo(userId: Donor['userId']): Promise<UserTypes | undefined>;
 }

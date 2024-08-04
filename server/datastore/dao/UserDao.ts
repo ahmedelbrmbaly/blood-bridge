@@ -1,11 +1,14 @@
 import { ActiveStatuses, BaseUser, UserTypes } from '../../types';
 
 export interface UserDao {
-  validateUser(email: BaseUser['userEmail'], password: BaseUser['userPassword']): BaseUser | null;
+  validateUser(
+    email: BaseUser['userEmail'],
+    password: BaseUser['userPassword']
+  ): Promise<BaseUser | undefined>;
 
-  getUserInfo(userId: BaseUser['userId']): UserTypes | null;
+  getUserInfo(userId: BaseUser['userId']): Promise<UserTypes | undefined>;
 
-  getUserType(userId: BaseUser['userId']): UserTypes | null;
+  getUserType(userId: BaseUser['userId']): Promise<UserTypes | undefined>;
 
-  getUserStatus(userId: BaseUser['userId']): ActiveStatuses | null;
+  getUserStatus(userId: BaseUser['userId']): Promise<ActiveStatuses | undefined>;
 }
