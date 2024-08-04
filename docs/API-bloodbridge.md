@@ -2,72 +2,96 @@
 
 ## Routes
 
+### Users
+
+**Routes:**
+
+- **home**
+
+  - **Endpoint:** `/v1/home`
+  - **HTTP Method:** GET
+
+- **Login**
+
+  - **Endpoint:** `/v1/login`
+  - **HTTP Method:** POST
+
+- **Logout**
+
+  - **Endpoint:** `/v1/logout`
+  - **HTTP Method:** POST
+
+  ***
+
 ### Donors
 
 **Routes:**
 
 - **Register Donor**
-  - **Endpoint:** `/api/donors/register`
+  - **Endpoint:** `/v1/donors/register`
   - **HTTP Method:** POST
-- **Login Donor**
-  - **Endpoint:** `/api/donors/login`
+- **Request Donation**
+  - **Endpoint:** `/v1/donors/request-donation`
   - **HTTP Method:** POST
-- **Request Donation Appointment**
-  - **Endpoint:** `/api/donors/appointment`
-  - **HTTP Method:** POST
-- **View Donation History**
-  - **Endpoint:** `/api/donors/history`
+- **OPTIONAL: View Donation History**
+  - **Endpoint:** `/v1/donors/history`
   - **HTTP Method:** GET
-- **Receive Notifications**
-  - **Endpoint:** `/api/donors/notifications`
+- **OPTIONAL: Receive Notifications**
+  - **Endpoint:** `/v1/donors/notifications`
   - **HTTP Method:** GET
 
 ### Hospital Officials
 
 **Routes:**
 
-- **Register Hospital**
-  - **Endpoint:** `/api/hospitals/register`
-  - **HTTP Method:** POST
-- **Login Hospital Official**
-  - **Endpoint:** `/api/hospitals/login`
+- **Register Hospital Official**
+  - **Endpoint:** `/v1/hospital-user/register`
   - **HTTP Method:** POST
 - **Search Blood Stock**
-  - **Endpoint:** `/api/hospitals/bloodstock`
+  - **Endpoint:** `/v1/hospital-user/search-stock`
   - **HTTP Method:** GET
 - **Request Blood**
-  - **Endpoint:** `/api/hospitals/request`
+  - **Endpoint:** `/v1/hospital-user/request-blood`
   - **HTTP Method:** POST
-- **View Request History**
-  - **Endpoint:** `/api/hospitals/history`
+- **OPTIONAL: View Request History**
+  - **Endpoint:** `/v1/hospital-user/history`
   - **HTTP Method:** GET
 
 ### Blood Bank Officials
 
 **Routes:**
 
+- **Register Bank Official**
+  - **Endpoint:** `/v1/bank-user/register`
+  - **HTTP Method:** POST
 - **Confirm Donation Appointment**
-  - **Endpoint:** `/api/bloodbanks/appointments/confirm`
+  - **Endpoint:** `/v1/bank-user/appointments/confirm`
   - **HTTP Method:** POST
 - **Validate Donation**
-  - **Endpoint:** `/api/bloodbanks/donations/validate`
+  - **Endpoint:** `/v1/bank-user/donations/change-status`
   - **HTTP Method:** POST
 - **Add Blood to Stock**
-  - **Endpoint:** `/api/bloodbanks/bloodstock`
+  - **Endpoint:** `/v1/bank-user/add-stocks`
   - **HTTP Method:** POST
 - **Accept Hospital Request**
-  - **Endpoint:** `/api/bloodbanks/requests/accept`
+  - **Endpoint:** `/v1/bank-user/requests/accept`
   - **HTTP Method:** POST
 - **Notify Donors**
-  - **Endpoint:** `/api/bloodbanks/donors/notify`
+  - **Endpoint:** `/v1/bank-user/donors/notify`
   - **HTTP Method:** POST
 
 ### System Admins
 
 **Routes:**
 
+- **Register Hospital**
+  - **Endpoint:** `/v1/hospital/register`
+  - **HTTP Method:** POST
+- **Register Bank**
+  - **Endpoint:** `/v1/bank/register`
+  - **HTTP Method:** POST
 - **Manage Users (Activate/Deactivate)**
-  - **Endpoint:** `/api/admins/users/manage`
+  - **Endpoint:** `/v1/admin/users/manage`
   - **HTTP Method:** POST
 
 ## Example API Routes and HTTP Methods
@@ -106,55 +130,4 @@ POST /api/bloodbanks/donors/notify
 
 ```plaintext
 POST /api/admins/users/manage
-```
-
-## MVC Structure
-
-**Models:**
-
-- `Donor`
-- `Hospital`
-- `BloodBank`
-- `Admin`
-- `Donation`
-- `BloodStock`
-- `BloodRequest`
-
-**Controllers:**
-
-- `donorController`
-- `hospitalController`
-- `bloodBankController`
-- `adminController`
-
-**Routes:**
-
-- `donorRoutes`
-- `hospitalRoutes`
-- `bloodBankRoutes`
-- `adminRoutes`
-
-### Folder Structure
-
-```plaintext
-project-root/
-├── controllers/
-│   ├── donorController.js
-│   ├── hospitalController.js
-│   ├── bloodBankController.js
-│   └── adminController.js
-├── models/
-│   ├── donor.js
-│   ├── hospital.js
-│   ├── bloodBank.js
-│   ├── admin.js
-│   ├── donation.js
-│   └── bloodStock.js
-├── routes/
-│   ├── donorRoutes.js
-│   ├── hospitalRoutes.js
-│   ├── bloodBankRoutes.js
-│   └── adminRoutes.js
-├── app.js
-└── server.js
 ```
