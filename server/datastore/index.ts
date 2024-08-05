@@ -1,8 +1,10 @@
-import { DonorDao } from './dao/DonorDao';
-import { UserDao } from './dao/UserDao';
+import { AdminsDao } from './dao/AdminDao';
+import { DonorsDao } from './dao/DonorDao';
+import { HospitalUsersDao } from './dao/HospitalUsersDao';
+import { UsersDao } from './dao/UserDao';
 import { sqlDataStore } from './sql';
 
-export interface Datastore extends DonorDao, UserDao {}
+export interface Datastore extends DonorsDao, UsersDao, AdminsDao, HospitalUsersDao {}
 
 export let db: Datastore;
 

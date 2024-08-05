@@ -40,5 +40,5 @@ export interface UsersDao {
 
   updateUserProfile(userId: BaseUser['userId'], updatedInfo: any): Promise<void>;
 
-  deleteDonorAccount(userId: BaseUser['userId']): Promise<void>;
+  deleteUserAccount(userId: BaseUser['userId']): Promise<void>;
 }

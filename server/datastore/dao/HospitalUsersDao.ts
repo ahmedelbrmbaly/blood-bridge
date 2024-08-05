@@ -9,9 +9,9 @@ export interface HospitalUsersDao {
 
   setBloodRequest(request: BloodRequest): Promise<void>;
 
-  getRequest(request: Partial<BloodRequest>): BloodRequest[];
+  getRequest(request: Partial<BloodRequest>): Promise<BloodRequest[]>;
 
-  getPendingRequest(hospitalId: HospitalOfficial['uHospitalId']): BloodRequest[];
+  getPendingRequest(hospitalId: HospitalOfficial['uHospitalId']): Promise<BloodRequest[]>;
 
-  getRequestHistory(hospitalId: HospitalOfficial['uHospitalId']): BloodRequest[];
+  getRequestHistory(hospitalId: HospitalOfficial['uHospitalId']): Promise<BloodRequest[]>;
 }

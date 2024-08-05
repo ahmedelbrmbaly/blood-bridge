@@ -3,9 +3,24 @@ import { open as sqliteOpen, Database } from 'sqlite';
 import path from 'path';
 
 import { Datastore } from '..';
-import { Donor, UserTypes, BaseUser, ActiveStatuses } from '../../types';
+import {
+  Donor,
+  UserTypes,
+  BaseUser,
+  ActiveStatuses,
+  Bank,
+  BloodRequest,
+  BloodStocks,
+  BloodTypes,
+  Cities,
+  Donation,
+  Hospital,
+  HospitalOfficial,
+  Patient,
+} from '../../types';
 
 export class sqlDataStore implements Datastore {
+  // DAtabase connection
   private db!: Database<sqlite3.Database, sqlite3.Statement>;
 
   public async openDb() {
@@ -23,7 +38,9 @@ export class sqlDataStore implements Datastore {
     return this;
   }
 
-  // Base User Interfaces
+  // --------------------------------------------------
+  // Base User Methods
+
   async validateUser(
     email: BaseUser['userEmail'],
     password: BaseUser['userPassword']
@@ -52,7 +69,45 @@ export class sqlDataStore implements Datastore {
     return uStatus;
   }
 
-  // Donar Interfaces
+  async getAvailableStocks(
+    bloodType: BloodTypes,
+    city: Cities,
+    bankId: Bank['bankId']
+  ): Promise<BloodStocks> {
+    throw new Error('Method not implemented.');
+  }
+
+  async setAvailableStocks(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  async setNotification(
+    notification: Notification,
+    senderId: BaseUser['userId'],
+    receiverId: BaseUser['userId']
+  ): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  async getNotifications(user: BaseUser['userId']): Promise<Notification[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  async viewUserProfile(userId: BaseUser['userId']): Promise<Partial<BaseUser> | undefined> {
+    throw new Error('Method not implemented.');
+  }
+
+  async updateUserProfile(userId: BaseUser['userId'], updatedInfo: any): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  async deleteUserAccount(userId: BaseUser['userId']): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  // ------------------------------------------------------
+  // Donor Methods
+
   async registerDonor(donor: Donor): Promise<void> {
     await this.db.run(
       'INSERT INTO base_users (user_type, user_name, user_email, user_password, user_city, user_status) VALUES (?, ?, ?, ?, ?, ?)',
@@ -82,5 +137,54 @@ export class sqlDataStore implements Datastore {
   async getDonorInfo(userId: Donor['userId']): Promise<Partial<Donor> | undefined> {
     const dInfo = await this.db.get('SELECT * FROM donors WHERE donor_id = ? ', userId);
     return dInfo;
+  }
+
+  async setAppointment(appointment: Donation): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  async getDonationHistoryDonor(userId: Donor['userId']): Promise<Donation[]> {
+    throw new Error('Method not implemented.');
+  }
+  // ------------------------------------------------------
+  // Admin Methods
+  async registerAdmin(user: BaseUser): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  async addHospital(newHospital1: Hospital): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  async addBank(newBank: Bank): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  async setActiveStatus(entityType: UserTypes, fId: number, status: ActiveStatuses): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  async viewAll(entityType: UserTypes): Promise<[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // ------------------------------------------------------
+  // Hospital Methods
+  async registerHospitalUser(hospitalUser: HospitalOfficial): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  async addPatient(patient: Patient): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  async getPatient(patientNationalId: Patient['patientNationalId']): Promise<Patient | undefined> {
+    throw new Error('Method not implemented.');
+  }
+  async setBloodRequest(request: BloodRequest): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  async getRequest(request: Partial<BloodRequest>): Promise<BloodRequest[]> {
+    throw new Error('Method not implemented.');
+  }
+  async getPendingRequest(hospitalId: HospitalOfficial['uHospitalId']): Promise<BloodRequest[]> {
+    throw new Error('Method not implemented.');
+  }
+  async getRequestHistory(hospitalId: HospitalOfficial['uHospitalId']): Promise<BloodRequest[]> {
+    throw new Error('Method not implemented.');
   }
 }
