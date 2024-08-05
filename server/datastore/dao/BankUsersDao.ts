@@ -16,9 +16,12 @@ export interface BankUsersDao {
     updatedInfo: Partial<Donation>
   ): Promise<void>;
 
-  getPendingBloodRequests(request: BloodRequest, request_status: BloodRequestStatuses): void;
+  getPendingBloodRequests(
+    request: BloodRequest,
+    request_status: BloodRequestStatuses
+  ): Promise<void>;
 
-  setBloodRequestStatus(request: BloodRequest, request_status: BloodRequestStatuses): void;
+  setBloodRequestStatus(request: BloodRequest, request_status: BloodRequestStatuses): Promise<void>;
 
   requestDonation(donorsID: Donor['userId'][], bloodType: BloodTypes): Promise<void>;
 
