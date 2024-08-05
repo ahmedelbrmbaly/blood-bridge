@@ -4,9 +4,9 @@ export interface UserDao {
   validateUser(
     email: BaseUser['userEmail'],
     password: BaseUser['userPassword']
-  ): Promise<BaseUser | undefined>;
+  ): Promise<BaseUser['userId'] | undefined>;
 
-  getUserInfo(userId: BaseUser['userId']): Promise<UserTypes | undefined>;
+  getUserInfo(userId: BaseUser['userId']): Promise<BaseUser | undefined>;
 
   getUserType(userId: BaseUser['userId']): Promise<UserTypes | undefined>;
 

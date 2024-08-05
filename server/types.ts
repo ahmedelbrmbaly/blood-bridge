@@ -1,5 +1,8 @@
-// Types Definations
+import { RequestHandler } from 'express';
 
+export type ExpressHandler<Req, Res> = RequestHandler<string, Partial<Res>, Partial<Req>, any>;
+
+// Types Definations
 type ID = string;
 type NonNegativeInteger = number & { __brand: 'NonNegativeInteger' };
 type Email = string & { __brand: 'Email' };
@@ -200,11 +203,5 @@ export interface BloodStocks extends Donation {
   bId: Donation['bankId'];
   bCity: Donation['bankCity'];
   bloodType: Donation['bloodType'];
-  quantity: Number;
+  quantity: NonNegativeInteger;
 }
-
-// export interface BloodStocks {
-//   blood_stock: Record<BloodType, Donation[]>;
-//   bank_id: Bank['bank_id'];
-//   quantity: NonNegativeInteger;
-// }
