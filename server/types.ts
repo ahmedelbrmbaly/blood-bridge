@@ -1,9 +1,10 @@
 import { RequestHandler } from 'express';
+import { Session } from 'express-session';
 
 export type ExpressHandler<Req, Res> = RequestHandler<string, Partial<Res>, Partial<Req>, any>;
 
 // Types Definations
-type ID = string;
+type ID = number;
 type NonNegativeInteger = number & { __brand: 'NonNegativeInteger' };
 type Email = string & { __brand: 'Email' };
 type Password = string;
@@ -59,6 +60,8 @@ export enum UserTypes {
   HospitalOfficial = 'HOSPITAL_OFFICIAL',
   BankOfficial = 'BANK_OFFICIAL',
   Admin = 'ADMIN',
+  Bank = 'BANK',
+  Hospital = 'HOSPITAL',
 }
 
 export enum ActiveStatuses {

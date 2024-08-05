@@ -77,6 +77,8 @@ export class sqlDataStore implements Datastore {
       donor.dLastDonation
     );
   }
+
+  // TODO: Get Donor Info joining Users table
   async getDonorInfo(userId: Donor['userId']): Promise<Partial<Donor> | undefined> {
     const dInfo = await this.db.get('SELECT * FROM donors WHERE donor_id = ? ', userId);
     return dInfo;

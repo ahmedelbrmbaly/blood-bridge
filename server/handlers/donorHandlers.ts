@@ -4,7 +4,8 @@ import { Donor, ExpressHandler } from '../types';
 
 export const donorRegister: ExpressHandler<{}, {}> = (req, res) => {
   console.log('donorRegisterHandler is called');
-  res.sendStatus(200);
+
+  return res.status(200).render('register', { title: 'Register - Blood Bridge' });
 };
 
 // TODO: Get Donor Info joining Users table

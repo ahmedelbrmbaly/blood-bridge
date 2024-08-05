@@ -13,31 +13,42 @@ import { db } from '../datastore';
 export const homePageHandler: ExpressHandler<{}, {}> = (req, res) => {
   console.log('HomePageHandler is called');
   console.log('Successful HomePageHandler');
-  res.sendStatus(200);
+  return res.status(200).render('home', { title: 'Home - Blood Bridge' });
 };
 
 // logInHandler
 export const logInHandler: ExpressHandler<LogInRequest, LogInResponse> = async (req, res) => {
   console.log('logInHandler is called');
+  if (req.method === 'GET') {
+    console.log('GET Method ');
+    return res.status(200).render('login', { title: 'Login - Blood Bridge' });
+  } else if (req.method === 'POST') {
+    const { email, password } = req.body;
+    console.log('POST Method ');
+    console.log(`Login trail with Email: '${email}' and Password: '${password}'`);
+    // TODO: Hash Password
+    if (!email || !password) {
+      console.log('Email or Password is Missing');
+      return res.status(400).render('login', {
+        title: 'Login - Blood Bridge',
+        message: 'Email or Password is Missing',
+      });
+    }
 
-  const { email, password } = req.body;
-  // TODO: Hash Password
-  if (!email || !password) {
-    console.log('Email or Password is Missing');
-    return res.sendStatus(400); // TODO: send message with the status code
-  }
+    const uID: BaseUser['userId'] | any = await db.validateUser(
+      email as BaseUser['userEmail'],
+      password
+    );
+    if (!uID) {
+      console.log('Email or Password is Wrong');
 
-  console.log(`Login trail with Email: '${email}' and Password: '${password}'`);
-  const uID: BaseUser['userId'] | any = await db.validateUser(
-    email as BaseUser['userEmail'],
-    password
-  );
-  if (!uID) {
-    console.log('Email or Password is Wrong');
-    return res.sendStatus(403); // TODO: send message with the status code
+      return res
+        .status(403)
+        .render('login', { title: 'Login - Blood Bridge', message: 'Email or Password is Wrong' });
+    }
+    console.log(`Successful email: '${email}' LogIn`);
+    return res.send(uID);
   }
-  console.log(`Successful email: '${email}' LogIn`);
-  return res.send(uID);
 };
 
 //logOutHandler

@@ -1,0 +1,134 @@
+<div class="container mt-5">
+  <h2>Register</h2>
+  <form id="registerForm">
+    <div class="form-group">
+      <label for="userType">User Type</label>
+      <div>
+        <input type="radio" name="userType" value="donor" required /> Donor
+        <input type="radio" name="userType" value="hospital_official" required /> Hospital Official
+        <input type="radio" name="userType" value="bank_official" required /> Bank Official
+        <input type="radio" name="userType" value="admin" required /> Admin
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="userName">Full Name</label>
+      <input type="text" class="form-control" id="userName" name="userName" required />
+    </div>
+
+    <div class="form-group">
+      <label for="userEmail">Email</label>
+      <input type="email" class="form-control" id="userEmail" name="userEmail" required />
+    </div>
+
+    <div class="form-group">
+      <label for="userPassword">Password</label>
+      <input type="password" class="form-control" id="userPassword" name="userPassword" required />
+    </div>
+
+    <div class="form-group">
+      <label for="userCity">City</label>
+      <select class="form-control" id="userCity" name="userCity" required>
+        <option value="">Select City</option>
+        <option value="Cairo">Cairo</option>
+        <option value="Alexandria">Alexandria</option>
+        <!-- Add more cities as needed -->
+      </select>
+    </div>
+
+    <div id="additionalFields"></div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const userTypeRadios = document.querySelectorAll('input[name="userType"]');
+    const additionalFields = document.getElementById('additionalFields');
+
+    userTypeRadios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        additionalFields.innerHTML = '';
+        if (this.value === 'donor') {
+          additionalFields.innerHTML = `
+            <div class="form-group">
+              <label for="nationalId">National ID</label>
+<input type="text" class="form-control" id="nationalId" name="nationalId" required pattern="^[23][0-9]{13}$" title="National ID must be numeric, start with 2 or 3, and be exactly 14 characters long">
+            </div>
+            <div class="form-group">
+              <label for="bloodType">Blood Type</label>
+              <select class="form-control" id="bloodType" name="bloodType" required>
+                <option value="">Select Blood Type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="lastDonation">Last Donation</label>
+              <input type="date" class="form-control" id="lastDonation" name="lastDonation">
+            </div>
+          `;
+        } else if (this.value === 'hospital_official') {
+          additionalFields.innerHTML = `
+            <div class="form-group">
+              <label for="hospitalName">Hospital Name</label>
+              <input type="text" class="form-control" id="hospitalName" name="hospitalName" required>
+            </div>
+          `;
+        } else if (this.value === 'bank_official') {
+          additionalFields.innerHTML = `
+            <div class="form-group">
+              <label for="bankName">Bank Name</label>
+              <input type="text" class="form-control" id="bankName" name="bankName" required>
+            </div>
+          `;
+        }
+      });
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const userType = document.querySelector('input[name="userType"]:checked').value;
+      let apiUrl = '';
+
+      switch (userType) {
+        case 'donor':
+          apiUrl = '#';
+          break;
+        case 'hospital_official':
+          apiUrl = '#';
+          break;
+        case 'bank_official':
+          apiUrl = '#';
+          break;
+        case 'admin':
+          apiUrl = '#';
+          break;
+      }
+
+      const formData = new FormData(this);
+      fetch(apiUrl, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Registration successful!');
+          } else {
+            alert('Registration failed: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  });
+</script>
