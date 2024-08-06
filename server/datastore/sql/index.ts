@@ -19,6 +19,7 @@ import {
   Patient,
   BankOfficial,
   BloodRequestStatuses,
+  UserNotification,
 } from '../../types';
 
 export class sqlDataStore implements Datastore {
@@ -84,14 +85,14 @@ export class sqlDataStore implements Datastore {
   }
 
   async setNotification(
-    notification: Notification,
+    notification: UserNotification,
     senderId: BaseUser['userId'],
     receiverId: BaseUser['userId']
   ): Promise<void> {
     throw new Error('Method not implemented.');
   }
 
-  async getNotifications(user: BaseUser['userId']): Promise<Notification[]> {
+  async getNotifications(user: BaseUser['userId']): Promise<UserNotification[]> {
     throw new Error('Method not implemented.');
   }
 
