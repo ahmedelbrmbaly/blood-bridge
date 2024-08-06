@@ -2,7 +2,7 @@ import { GetDonorInfoResponse, UserIdRequest } from '../apis';
 import { db } from '../datastore';
 import { Donor, ExpressHandler } from '../types';
 
-export const donorRegister: ExpressHandler<{}, {}> = (req, res) => {
+export const donorRegisterHandler: ExpressHandler<{}, {}> = async (req, res) => {
   console.log('donorRegisterHandler is called');
 
   return res.status(200).render('register', { title: 'Register - Blood Bridge' });
@@ -23,4 +23,12 @@ export const getDonorInfoHandler: ExpressHandler<UserIdRequest, GetDonorInfoResp
 
   console.log(`User ${dID} Info is ${donorInfo}`);
   return res.send(donorInfo); // TODO: remove password from return
+};
+
+export const setAppointmentHandler: ExpressHandler<{}, {}> = async (req, res) => {
+  throw new Error('Not implemented');
+};
+
+export const getDonationHistoryDonorHandler: ExpressHandler<{}, {}> = async (req, res) => {
+  throw new Error('Not implemented');
 };
