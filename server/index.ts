@@ -8,9 +8,21 @@ import {
   getUserTypeHandler,
   homePageHandler,
   logInHandler,
+  logOutHandler,
 } from './handlers/baseUserHandler';
 import { donorRegister, getDonorInfoHandler } from './handlers/donorHandlers';
-import { requestLoggerMiddleware } from './middlewares';
+import { checkLogedUserMiddleware, requestLoggerMiddleware } from './middlewares';
+import { BaseUser } from './types';
+
+//TODO: use session and JWT for authentication
+// memic session
+export let logedUser: BaseUser | undefined = undefined;
+export function setLogedUser(user: BaseUser | undefined) {
+  logedUser = user;
+}
+export function getLogedUser(): BaseUser | undefined {
+  return logedUser;
+}
 
 (async () => {
   await initDb();
@@ -40,6 +52,7 @@ import { requestLoggerMiddleware } from './middlewares';
   // Base User route
   app.get('/v1/home', homePageHandler);
   app.get('/v1/login', logInHandler);
+  app.get('/v1/logout', logOutHandler);
   app.post('/v1/login', logInHandler);
   app.get('/v1/user/status', getUserStatusHandler);
   app.get('/v1/user/type', getUserTypeHandler);

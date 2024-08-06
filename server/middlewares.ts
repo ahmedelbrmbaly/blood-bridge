@@ -1,9 +1,19 @@
 import { RequestHandler } from 'express';
-import { ExpressHandler } from './types';
+import { BaseUser, ExpressHandler } from './types';
+import { setLogedUser, getLogedUser } from './index';
 
 export const requestLoggerMiddleware: ExpressHandler<{}, {}> = (req, res, next) => {
   console.log('New Request', req.path, '-body', req.body);
   next();
+};
+
+export const checkLogedUserMiddleware: ExpressHandler<{}, {}> = (req, res, next) => {
+  const logedUser: BaseUser | undefined = getLogedUser();
+  if (logedUser) {
+    next();
+  } else {
+    res.status(401).json({ message: 'Unauthorized: No logged-in user' });
+  }
 };
 
 // export const sessionMiddleware = session({

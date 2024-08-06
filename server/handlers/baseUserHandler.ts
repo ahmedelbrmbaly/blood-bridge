@@ -8,6 +8,7 @@ import {
   UserIdRequest,
 } from '../apis';
 import { db } from '../datastore';
+import { setLogedUser, getLogedUser } from '../index';
 
 // homePageHandler
 export const homePageHandler: ExpressHandler<{}, {}> = (req, res) => {
@@ -35,26 +36,27 @@ export const logInHandler: ExpressHandler<LogInRequest, LogInResponse> = async (
       });
     }
 
-    const uID: BaseUser['userId'] | any = await db.validateUser(
-      email as BaseUser['userEmail'],
-      password
-    );
-    if (!uID) {
+    const user: BaseUser | any = await db.validateUser(email as BaseUser['userEmail'], password);
+    if (!user) {
       console.log('Email or Password is Wrong');
 
       return res
         .status(403)
         .render('login', { title: 'Login - Blood Bridge', message: 'Email or Password is Wrong' });
     }
+    // correct email and password
     console.log(`Successful email: '${email}' LogIn`);
-    return res.send(uID);
+    // req.session.user = user;
+    setLogedUser(user);
+
+    return res.redirect('/v1/home');
   }
 };
-
 //logOutHandler
 export const logOutHandler: ExpressHandler<{}, {}> = (req, res) => {
+  setLogedUser(undefined);
   console.log('logOutHandler is called');
-  res.sendStatus(404);
+  return res.redirect('/v1/home');
 };
 
 //getUserInfoHandler
