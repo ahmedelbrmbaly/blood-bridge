@@ -9,6 +9,7 @@ import {
   homePageHandler,
   logInHandler,
   logOutHandler,
+  registerPageHandler,
 } from './handlers/baseUserHandler';
 import { donorRegister, getDonorInfoHandler } from './handlers/donorHandlers';
 import { checkLogedUserMiddleware, requestLoggerMiddleware } from './middlewares';
@@ -16,11 +17,11 @@ import { BaseUser } from './types';
 
 //TODO: use session and JWT for authentication
 // memic session
-export let logedUser: BaseUser | undefined = undefined;
-export function setLogedUser(user: BaseUser | undefined) {
+export let logedUser: BaseUser | any = null;
+export function setLogedUser(user: BaseUser | any) {
   logedUser = user;
 }
-export function getLogedUser(): BaseUser | undefined {
+export function getLogedUser(): BaseUser | any {
   return logedUser;
 }
 
@@ -54,6 +55,7 @@ export function getLogedUser(): BaseUser | undefined {
   app.get('/v1/login', logInHandler);
   app.get('/v1/logout', logOutHandler);
   app.post('/v1/login', logInHandler);
+  app.get('/v1/register', registerPageHandler);
   app.get('/v1/user/status', getUserStatusHandler);
   app.get('/v1/user/type', getUserTypeHandler);
   app.get('/v1/user/info', getUserInfoHandler);

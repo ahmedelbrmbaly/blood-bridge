@@ -14,7 +14,16 @@ import { setLogedUser, getLogedUser } from '../index';
 export const homePageHandler: ExpressHandler<{}, {}> = (req, res) => {
   console.log('HomePageHandler is called');
   console.log('Successful HomePageHandler');
-  return res.status(200).render('home', { title: 'Home - Blood Bridge' });
+
+  return res
+    .status(200)
+    .render('home', { title: 'Home - Blood Bridge', isAuthenticated: getLogedUser() });
+};
+
+export const registerPageHandler: ExpressHandler<{}, {}> = (req, res) => {
+  return res
+    .status(200)
+    .render('register', { title: 'register - Blood Bridge', isAuthenticated: getLogedUser() });
 };
 
 // logInHandler
@@ -22,7 +31,9 @@ export const logInHandler: ExpressHandler<LogInRequest, LogInResponse> = async (
   console.log('logInHandler is called');
   if (req.method === 'GET') {
     console.log('GET Method ');
-    return res.status(200).render('login', { title: 'Login - Blood Bridge' });
+    return res
+      .status(200)
+      .render('login', { title: 'register - Blood Bridge', isAuthenticated: getLogedUser() });
   } else if (req.method === 'POST') {
     const { email, password } = req.body;
     console.log('POST Method ');
