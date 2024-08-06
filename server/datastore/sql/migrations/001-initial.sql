@@ -111,7 +111,7 @@ CREATE TABLE donations (
     blood_type INTEGER NOT NULL,
     virus_test INTEGER NOT NULL ,
     donation_status INTEGER NOT NULL,
-    appointment_requested_at DATE DEFAULT CURRENT_DATE,
+    appointment_requested_at DATE,
     appointment_confirmed_date DATE,
     donation_date DATE,
     expiration_date DATE,
