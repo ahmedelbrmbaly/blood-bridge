@@ -143,7 +143,7 @@ export interface Hospital {
   hospitalStatus: ActiveStatuses | ActiveStatuses.Pending;
 }
 
-export interface HospitalOfficial extends BaseUser {
+export interface HospitalOfficial extends BaseUser, Hospital {
   readonly uHospitalId: Hospital['hospitalId'];
 }
 
@@ -154,7 +154,7 @@ export interface Bank {
   bankStatus: ActiveStatuses | ActiveStatuses.Pending;
 }
 
-export interface BankOfficial extends BaseUser {
+export interface BankOfficial extends BaseUser, Bank {
   readonly uBankId: Bank['bankId'];
 }
 
@@ -193,7 +193,7 @@ export interface BloodRequest extends Patient {
   requestStatus: BloodRequestStatuses;
 }
 
-export interface Notification {
+export interface UserNotification {
   readonly notificationId: ID;
   userId: BaseUser['userId'];
   senderId: BaseUser['userId'];

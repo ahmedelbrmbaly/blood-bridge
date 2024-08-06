@@ -5,10 +5,12 @@ import {
   BloodStocks,
   BloodTypes,
   Cities,
+  UserNotification,
   UserTypes,
 } from '../../types';
 
 export interface UsersDao {
+  //TODO: add global register method
   validateUser(
     email: BaseUser['userEmail'],
     password: BaseUser['userPassword']
@@ -24,17 +26,17 @@ export interface UsersDao {
     bloodType: BloodTypes,
     city: Cities,
     bankId: Bank['bankId']
-  ): Promise<BloodStocks>;
+  ): Promise<BloodStocks[]>;
 
   setAvailableStocks(): Promise<void>;
 
   setNotification(
-    notification: Notification,
+    notification: UserNotification,
     senderId: BaseUser['userId'],
     receiverId: BaseUser['userId']
   ): Promise<void>;
 
-  getNotifications(user: BaseUser['userId']): Promise<Notification[]>;
+  getNotifications(user: BaseUser['userId']): Promise<UserNotification[]>;
 
   viewUserProfile(userId: BaseUser['userId']): Promise<Partial<BaseUser> | undefined>;
 

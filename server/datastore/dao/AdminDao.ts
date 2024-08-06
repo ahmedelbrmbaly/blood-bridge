@@ -10,5 +10,5 @@ export interface AdminsDao {
 
   // TODO: add methods to edit different entities in the system
 
-  viewAll(entityType: UserTypes): Promise<[]>;
+  viewAll(entityType: UserTypes): Promise<any[]>;
 }

@@ -19,7 +19,7 @@ export interface BankUsersDao {
   getPendingBloodRequests(
     request: BloodRequest,
     request_status: BloodRequestStatuses
-  ): Promise<void>;
+  ): Promise<Donation[]>;
 
   setBloodRequestStatus(request: BloodRequest, request_status: BloodRequestStatuses): Promise<void>;
 
