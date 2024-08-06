@@ -70,7 +70,93 @@
               <a class="nav-link" href="/v1/register">Register</a>
             </li>
           <% } %>
+          
           <% if (isAuthenticated) { %>
+          <% if (isAuthenticated.user_type == 1) { %>
+            <li class="nav-item">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Make Appointment</a>
+            </li>
+            </li>
+
+            <li class="nav-item">
+              <li class="nav-item">
+                <a class="nav-link" href="#">History</a>
+              </li>
+              </li>
+
+              <li class="nav-item">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Notification</a>
+                </li>
+                </li>
+          <% } %>
+
+          <% if (isAuthenticated.user_type == 2) { %>
+            <li class="nav-item">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Add Patient</a>
+            </li>
+            </li>
+
+            <li class="nav-item">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Blood Request</a>
+              </li>
+              </li>
+
+              <li class="nav-item">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Pending Request</a>
+                </li>
+                </li>
+
+                <li class="nav-item">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Request History</a>
+                  </li>
+                  </li>
+
+              <li class="nav-item">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Notification</a>
+                </li>
+                </li>
+          <% } %>
+          
+
+          <% if (isAuthenticated.user_type == 3) { %>
+            <li class="nav-item">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pending Appointments</a>
+            </li>
+            </li>
+
+            <li class="nav-item">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pending Blood Request</a>
+              </li>
+              </li>
+
+              <li class="nav-item">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Pending virus test</a>
+                </li>
+                </li>
+
+                <li class="nav-item">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Donation History</a>
+                  </li>
+                  </li>
+
+              <li class="nav-item">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Notification</a>
+                </li>
+                </li>
+          <% } %>
+
             <li class="nav-item">
             
             <li class="nav-item">
@@ -79,6 +165,7 @@
             
             </li>
           <% } %>
+
         </ul>
       </div>
     </nav>

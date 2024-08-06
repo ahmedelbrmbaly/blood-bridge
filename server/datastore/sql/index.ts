@@ -50,12 +50,12 @@ export class sqlDataStore implements Datastore {
     email: BaseUser['userEmail'],
     password: BaseUser['userPassword']
   ): Promise<BaseUser['userId'] | undefined> {
-    const userId: BaseUser['userId'] | any = await this.db.get<BaseUser>(
-      'SELECT user_id from base_users where user_email = ? and user_password = ?',
+    const user: BaseUser | any = await this.db.get<BaseUser>(
+      'SELECT *  from base_users where user_email = ? and user_password = ?',
       email,
       password
     );
-    return userId;
+    return user;
   }
 
   async getUserInfo(userId: BaseUser['userId']): Promise<BaseUser | undefined> {

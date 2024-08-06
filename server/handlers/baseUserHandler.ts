@@ -43,6 +43,7 @@ export const logInHandler: ExpressHandler<LogInRequest, LogInResponse> = async (
       console.log('Email or Password is Missing');
       return res.status(400).render('login', {
         title: 'Login - Blood Bridge',
+        isAuthenticated: getLogedUser(),
         message: 'Email or Password is Missing',
       });
     }
@@ -53,13 +54,17 @@ export const logInHandler: ExpressHandler<LogInRequest, LogInResponse> = async (
 
       return res
         .status(403)
-        .render('login', { title: 'Login - Blood Bridge', message: 'Email or Password is Wrong' });
+        .render('login', {
+          title: 'Login - Blood Bridge',
+          isAuthenticated: getLogedUser(),
+          message: 'Email or Password is Wrong',
+        });
     }
     // correct email and password
     console.log(`Successful email: '${email}' LogIn`);
     // req.session.user = user;
     setLogedUser(user);
-
+    console.log(getLogedUser());
     return res.redirect('/v1/home');
   }
 };
