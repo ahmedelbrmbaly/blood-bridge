@@ -52,13 +52,11 @@ export const logInHandler: ExpressHandler<LogInRequest, LogInResponse> = async (
     if (!user) {
       console.log('Email or Password is Wrong');
 
-      return res
-        .status(403)
-        .render('login', {
-          title: 'Login - Blood Bridge',
-          isAuthenticated: getLogedUser(),
-          message: 'Email or Password is Wrong',
-        });
+      return res.status(403).render('login', {
+        title: 'Login - Blood Bridge',
+        isAuthenticated: getLogedUser(),
+        message: 'Email or Password is Wrong',
+      });
     }
     // correct email and password
     console.log(`Successful email: '${email}' LogIn`);
@@ -125,4 +123,12 @@ export const getUserStatusHandler: ExpressHandler<UserIdRequest, GetUserStatusRe
   }
   console.log(`User ${uID} Status is ${userStatus}`);
   return res.send(userStatus);
+};
+
+export const setAvailableStocksHandler: ExpressHandler<{}, {}> = (req, res) => {
+  throw new Error('Not Implemented');
+};
+
+export const setNotificationHandler: ExpressHandler<{}, {}> = (req, res) => {
+  throw new Error('Not Implemented');
 };
